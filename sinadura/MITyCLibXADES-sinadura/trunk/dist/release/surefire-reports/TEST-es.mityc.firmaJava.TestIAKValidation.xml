@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.088" errors="0" skipped="0" tests="3" name="es.mityc.firmaJava.TestIAKValidation">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/i386"/>
+    <property name="java.vm.version" value="17.1-b03"/>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
+    <property name="java.vendor.url" value="http://java.sun.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="ES"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/alfredo/Escritorio/MITyCLibXADES"/>
+    <property name="java.runtime.version" value="1.6.0_22-b04"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="basedir" value="/home/alfredo/Escritorio/MITyCLibXADES"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/endorsed"/>
+    <property name="os.arch" value="i386"/>
+    <property name="surefire.real.class.path" value="/tmp/surefirebooter4481498896138413103.jar"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/i386/server:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/../lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/i386/client:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/i386:/usr/lib/xulrunner-addons:/usr/lib/xulrunner-addons:/usr/java/packages/lib/i386:/lib:/usr/lib"/>
+    <property name="surefire.test.class.path" value="/home/alfredo/Escritorio/MITyCLibXADES/build/test:/home/alfredo/Escritorio/MITyCLibXADES/build/release:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibTSA/1.0.4/MITyCLibTSA-1.0.4.jar:/home/alfredo/.m2/repository/org/bouncycastle/bctsp-jdk15/1.43/bctsp-jdk15-1.43.jar:/home/alfredo/.m2/repository/org/bouncycastle/bcmail-jdk15/1.43/bcmail-jdk15-1.43.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibAPI/1.0.4/MITyCLibAPI-1.0.4.jar:/home/alfredo/.m2/repository/org/bouncycastle/bcprov-jdk15/1.43/bcprov-jdk15-1.43.jar:/home/alfredo/.m2/repository/commons-logging/commons-logging/1.1/commons-logging-1.1.jar:/home/alfredo/.m2/repository/logkit/logkit/1.0.1/logkit-1.0.1.jar:/home/alfredo/.m2/repository/avalon-framework/avalon-framework/4.1.3/avalon-framework-4.1.3.jar:/home/alfredo/.m2/repository/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar:/home/alfredo/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/xmlsec-1.4.2-ADSI/1.0/xmlsec-1.4.2-ADSI-1.0.jar:/home/alfredo/.m2/repository/xalan/xalan/2.7.1/xalan-2.7.1.jar:/home/alfredo/.m2/repository/xalan/serializer/2.7.1/serializer-2.7.1.jar:/home/alfredo/.m2/repository/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar:/home/alfredo/.m2/repository/junit/junit/4.3.1/junit-4.3.1.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibCert/1.0.4/MITyCLibCert-1.0.4.jar:/home/alfredo/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibTrust/1.0.4/MITyCLibTrust-1.0.4.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibOCSP/1.0.4/MITyCLibOCSP-1.0.4.jar:/home/alfredo/.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar:/home/alfredo/.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot Tiered Compilers"/>
+    <property name="os.version" value="2.6.32-27-generic-pae"/>
+    <property name="user.home" value="/home/alfredo"/>
+    <property name="user.timezone" value="Europe/Madrid"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="user.name" value="alfredo"/>
+    <property name="java.class.path" value="/home/alfredo/Escritorio/MITyCLibXADES/build/test:/home/alfredo/Escritorio/MITyCLibXADES/build/release:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibTSA/1.0.4/MITyCLibTSA-1.0.4.jar:/home/alfredo/.m2/repository/org/bouncycastle/bctsp-jdk15/1.43/bctsp-jdk15-1.43.jar:/home/alfredo/.m2/repository/org/bouncycastle/bcmail-jdk15/1.43/bcmail-jdk15-1.43.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibAPI/1.0.4/MITyCLibAPI-1.0.4.jar:/home/alfredo/.m2/repository/org/bouncycastle/bcprov-jdk15/1.43/bcprov-jdk15-1.43.jar:/home/alfredo/.m2/repository/commons-logging/commons-logging/1.1/commons-logging-1.1.jar:/home/alfredo/.m2/repository/logkit/logkit/1.0.1/logkit-1.0.1.jar:/home/alfredo/.m2/repository/avalon-framework/avalon-framework/4.1.3/avalon-framework-4.1.3.jar:/home/alfredo/.m2/repository/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar:/home/alfredo/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/xmlsec-1.4.2-ADSI/1.0/xmlsec-1.4.2-ADSI-1.0.jar:/home/alfredo/.m2/repository/xalan/xalan/2.7.1/xalan-2.7.1.jar:/home/alfredo/.m2/repository/xalan/serializer/2.7.1/serializer-2.7.1.jar:/home/alfredo/.m2/repository/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar:/home/alfredo/.m2/repository/junit/junit/4.3.1/junit-4.3.1.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibCert/1.0.4/MITyCLibCert-1.0.4.jar:/home/alfredo/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibTrust/1.0.4/MITyCLibTrust-1.0.4.jar:/home/alfredo/.m2/repository/es/mityc/jumbo/adsi/MITyCLibOCSP/1.0.4/MITyCLibOCSP-1.0.4.jar:/home/alfredo/.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar:/home/alfredo/.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="32"/>
+    <property name="java.home" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="es"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_22"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/resources.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/rt.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/jsse.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/jce.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/lib/charsets.jar:/usr/lib/jvm/java-6-sun-1.6.0.22/jre/classes"/>
+    <property name="java.vendor" value="Sun Microsystems Inc."/>
+    <property name="localRepository" value="/home/alfredo/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="gnome"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.012" classname="es.mityc.firmaJava.TestIAKValidation" name="validaIAIKBesValid"/>
+  <testcase time="0.04" classname="es.mityc.firmaJava.TestIAKValidation" name="validaIAIKCValid"/>
+  <testcase time="0.034" classname="es.mityc.firmaJava.TestIAKValidation" name="validaIAIKXValid"/>
+</testsuite>

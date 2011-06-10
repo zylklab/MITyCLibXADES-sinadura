@@ -1,0 +1,13 @@
+            ------
+            Ejemplos de validaciones
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplos de validaciones de firma XML
+
+  * {{{./basic-validation.html}Validación básica de una firma}}
+    
+  * {{{./complete-validation.html}Validación completa de una firma}}
+  
+  []

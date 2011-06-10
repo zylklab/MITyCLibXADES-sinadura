@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="Preguntas frecuentes"
+  toplink="false">
+
+  <part id="general">
+    <title>General</title>
+
+    <faq id="que-es-MITyCLibXADES">
+      <question>
+        ¿Qué es MITyCLibXADES?
+      </question>
+      <answer>
+        <p>MITyCLibXADES es una librería que forma parte del proyecto de Componentes 
+           que distribuye el Ministerio de Industria, Turismo y Comercio. Dicha 
+           librería proporciona la funcionalidad necesaria para el manejo de ficheros
+           con metadatos tipo XML, uso de certificados, y para la construcción de firmas 
+           electrónicas XAdES, así como para su validación.</p>
+      </answer>
+    </faq>
+    <faq id="tipos-firmas">
+      <question>
+        ¿Qué tipo de firmas se pueden construir?
+      </question>
+      <answer>
+          <p>Cada nivel de firma extiende de los anteriores. Los siguientes tipos de firma son, por orden:</p>
+          <ul>
+              <li>XAdES-BES: Es un tipo de firma básico con datos no garantizados sobre el actor firmante,
+                  los datos de firma y el momento de firma
+              </li>
+              <li>XAdES-EPES: Es una firma que incluye un política de firma. Una política de firma es un 
+                  criterio definido en la política que la firma ha de cumplir.
+              </li>
+              <li>XAdES-T: Es una firma XAdES-BES que incluye un sello de tiempo que sirve para garantizar
+                  cuando fue realizada la firma.
+              </li>
+              <li>XAdES-C: Es un tipo de firma que incluye referencias a información referente a la cadena
+                  de certificados firmante, y del estado de validez del certificado de firma.
+              </li>
+              <li>XAdES-X: Este tipo de firmas incluyen un segundo sellado de tiempo que fortalece la 
+                  robustez de la firma.
+              </li>
+              <li>XAdES-XL: Este tipo de firmas incluyen los datos a los cuales se hacen referencia en las
+                  firmas del nivel C. Es decir, incluye esos datos en la propia firma de modo que el fichero
+                  de firma contenga todos los elementos que aseguran que el certificado firmante era válido 
+                  en el momento en el que se firmó.
+              </li>
+              <!-- 
+              <li>XAdES-A: Este tipo de firmas pueden ser aplicadas en cualquiera de los anteriores formatos. 
+                  Se trata de incluir un nuevo sello de tiempo que firma todo el anterior contenido, 
+                  protegiendo la firma de posibles vulnerabilidades y prolongando la vida util de una firma.
+              </li>
+               -->
+         </ul>
+      </answer>
+    </faq>
+    <faq id="versiones-firmas">
+      <question>
+        ¿Qué versiones de firmas están soportadas?
+      </question>
+      <answer>
+          <p>Actualmente se soportan las versiones 1.1.1, 1.2.2 y 1.3.2</p>
+      </answer>
+    </faq>
+    <faq id="quien-debe-usarla">
+      <question>
+        ¿Quién debe usar MITyCLibXAdES?
+      </question>
+      <answer>
+        <p>Aquellos integradores que necesiten funcionalidades de 
+        firma y validación, y manejo de certificados.</p>
+      </answer>
+    </faq>
+    <faq id="licencia-de-distribucion">
+      <question>
+        ¿Bajo qué licencia se distribuye?
+      </question>
+      <answer>
+        <p>Bajo licencia LGPL.</p>
+      </answer>
+    </faq>
+    <faq id="en-caso-de-error">
+      <question>
+        En caso de encontrar un error, ¿a quién debo dirigirme?
+      </question>
+      <answer>
+        <p>Al Centro de Tecnologías del Plan Avanza, mediante correo electrónico en la dirección:</p>
+        <p><img alt="Email Centro de Tecnología del Plan Avanza" src="images/imagenEmail.png"/></p>
+      </answer>
+    </faq>
+  </part>
+
+  <part id="instalacion">
+
+    <title>Instalación</title>
+
+    <faq id="requisitos">
+      <question>
+        Requisitos
+      </question>
+      <answer>
+        <p>Máquina virtual Java 1.5 (disponible descarga en <a href="http://www.java.com">www.java.com</a>).</p>
+      </answer>
+    </faq>
+    <faq id="como-se-instala">
+      <question>
+        ¿Cómo se instala?
+      </question>
+      <answer>
+        <p>Incluyendo el Jar de la propia librería y todas sus <a href="dependencies.html">
+           dependencias</a> en el <i>Classpath</i> de la aplicación que va a usar esta librería.</p>
+      </answer>
+    </faq>
+
+  </part>
+
+</faqs>

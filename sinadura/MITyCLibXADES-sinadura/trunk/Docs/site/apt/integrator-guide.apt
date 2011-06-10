@@ -1,0 +1,63 @@
+            ------
+            Ejemplos de uso
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplos de uso
+
+  Mediante los siguientes ejemplos se pretente mostrar algunas de las funcionalidades 
+más comunes que un integrador puede necesitar de la librería MITyCLibXAdES.
+
+  Actualmente existen tres tipos de ejemplos que se distribuyen con el código fuente de la librería:
+
+  * Ejemplos de diferentes tipos de firma XML:
+    
+    * {{{integrator-guide/detached-sign.html}Firma Detached}}
+    
+    * {{{integrator-guide/enveloped-sign.html}Firma Enveloped}}
+    
+    * {{{integrator-guide/enveloping-sign.html}Firma Enveloping}}
+    
+    * {{{integrator-guide/mixed-sign.html}Firma Mixta}}
+    
+    []
+
+  Para simplificar, los ejemplos anteriores usarán el formato XAdES-BES
+
+  * Ejemplos de diferentes formatos de firma XML:
+  
+    * {{{integrator-guide/xades-bes-sign.html}Firma XAdES-BES}}
+    
+    * {{{integrator-guide/xades-epes-sign.html}Firma XAdES-EPES}}
+    
+    * {{{integrator-guide/xades-t-sign.html}Firma XAdES-T}}
+    
+    * {{{integrator-guide/xades-c-sign.html}Firma XAdES-C}}
+    
+    * {{{integrator-guide/xades-x-sign.html}Firma XAdES-X}}
+    
+    * {{{integrator-guide/xades-xl-sign.html}Firma XAdES-XL}}
+
+    []
+
+  Para simplificar, los ejemplos anteriores usarán el tipo enveloped.
+
+  * Ejemplos de validaciones de firma XML:
+
+    * {{{integrator-guide/basic-validation.html}Validación básica de una firma}}
+    
+    * {{{integrator-guide/complete-validation.html}Validación completa de una firma}}
+  
+    []
+
+  []
+
+  Los dos primeros tipos de ejemplos están relacionados con firmas. Puesto que 
+todos los ejemplos serán muy parecidos es necesario conocer previamente un 
+{{{integrator-guide/generic-sign.html}ejemplo genérico de firma}}, sin importar
+que tipo y/o formato se esté utilizando.
+  
+  El objetivo de los ejemplos es que sean fáciles de entender y autocontenidos.
+Por este motivo, aspectos tales como la configuración, la gestión de errores o 
+los mensajes de logs no se han tenido en cuenta.

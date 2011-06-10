@@ -1,0 +1,61 @@
+            ------
+            Ejemplo de validación básica de una firma
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplo de validación básica de una firma
+
+  El objetivo de este ejemplo es mostrar los pasos necesarios para realizar una 
+validación básica de una firma electrónica. Dicha clase emplea recursos de la librería  XAdES para
+comprobar que la firma es válida, y devuelve información relativa a ella. El código completo del 
+ejemplo se puede ver {{{../xref-test/es/mityc/javasign/xades/examples/validations/BasicValidation.html}aquí}}.
+También se puede ver el Javadoc asociado al ejemplo 
+{{{../testapidocs/es/mityc/javasign/xades/examples/validations/BasicValidation.html}aquí}}.
+
+  Dicho ejemplo muestra el proceso de validación de dos ficheros contenidos dentro de los recursos de test.
+Se trata de la validación de una firma válida y una firma alterada. El ejemplo simplemente recupera las firmas
+como recursos de clase:
+
++---+
+EjemploXADESValidacionBasic p = new EjemploXADESValidacionBasic();
+System.out.println("\nValidando una firma válida:");
+p.validarFichero(EjemploXADESValidacionBasic.class.getResourceAsStream(FICHERO_XADES_VALIDO));
+System.out.println("\n-------------------------------------------------------\n");
++---+
+
+  A continuación, los parsea convirtiéndolos a formato "Document". Se ha eliminado el tratamiento de excepciones
+para mayor claridad:
+
++---+
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+dbf.setNamespaceAware(true); // Para que no se altere el orden de los atributos de nodo invalidando la firma 
+DocumentBuilder db = dbf.newDocumentBuilder();
+Document doc = db.parse(fichero);
++---+
+
+  Una vez se dispone del documento de firma, se lanza la validación mediante una instancia de la clase
+   {{{../apidocs/es/mityc/firmaJava/libreria/xades/ValidarFirmaXML.html}ValidarFirmaXML}}
+   y finalmente se muestra el resultado.
+
++---+
+try {
+    ValidarFirmaXML vXml = new ValidarFirmaXML();
+    results = vXml.validar(doc, "./", null) ;
+} catch(Exception e){
+    e.printStackTrace();
+}
++---+
+
+  Como se puede ver en la documentación de la clase {{{../apidocs/es/mityc/firmaJava/libreria/xades/ValidarFirmaXML.html}ValidarFirmaXML}}
+  el método <validar> recibe tres parámetros, que son los siguientes:
+  
+     [[1]] Documento con la firma XAdES a validar.
+     
+     [[2]] URI base donde se encuentran aquellos recursos relativos que aparecen en 
+     la firma (por ejemplo, los ficheros de complemento de información en una firma XADES-C). 
+     En este caso se utiliza el directorio actual donde se ejecuta el ejemplo, 
+     indicado por "./". 
+     
+     [[3]] Validadores a aplicar (tanto de confianza como de políticas) a la firma. 
+     En este caso, el valor es <null> puesto que estamos en el caso de una validación básica.

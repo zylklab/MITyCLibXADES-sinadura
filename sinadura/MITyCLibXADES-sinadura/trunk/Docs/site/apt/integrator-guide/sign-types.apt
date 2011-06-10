@@ -1,0 +1,17 @@
+            ------
+            Ejemplos de tipos de firma
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplos de diferentes tipos de firma XML
+    
+  * {{{./detached-sign.html}Firma Detached}}
+    
+  * {{{./enveloped-sign.html}Firma Enveloped}}
+    
+  * {{{./enveloping-sign.html}Firma Enveloping}}
+    
+  * {{{./mixed-sign.html}Firma Mixta}}
+    
+  []

@@ -1,0 +1,21 @@
+            ------
+            Ejemplos de formatos de firma
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplos de diferentes formatos de firma XML
+  
+  * {{{./xades-bes-sign.html}Firma XAdES-BES}}
+    
+  * {{{./xades-epes-sign.html}Firma XAdES-EPES}}
+    
+  * {{{./xades-t-sign.html}Firma XAdES-T}}
+    
+  * {{{./xades-c-sign.html}Firma XAdES-C}}
+    
+  * {{{./xades-x-sign.html}Firma XAdES-X}}
+    
+  * {{{./xades-xl-sign.html}Firma XAdES-XL}}
+
+  []

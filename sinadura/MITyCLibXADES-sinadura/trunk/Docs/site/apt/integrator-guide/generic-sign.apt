@@ -1,0 +1,157 @@
+            ------
+            Ejemplos de firma XML genérica
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplo de firma XML genérica
+
+  El objetivo de este ejemplo es mostrar los pasos necesarios para realizar una
+firma XML independientemente del tipo de firma y del formato que se esté aplicando.
+El ejemplo no es un programa ejecutable, puesto que se trata de una clase genérica 
+que deberían extender todos los ejemplos que realicen una firma de un tipo y formato 
+concreto. El código completo del ejemplo se puede ver
+{{{../xref-test/es/mityc/javasign/xades/examples/GenericXMLSignature.html}aquí}}.
+También se puede ver el Javadoc asociado al ejemplo 
+{{{../testapidocs/es/mityc/javasign/xades/examples/GenericXMLSignature.html}aquí}}.
+
+  Para realizar una firma XML se necesitan los siguientes elementos:
+  
+  * Certificado con el que se desea firmar (instancia de la clase <java.security.cert.X509Certificate> del API de Java).
+  
+  * Clave privada del certificado anterior (instancia de la clase <java.security.PrivateKey> del API de Java).
+  
+  * Proveedor criptográfico, (instancia de la clase <java.security.Provider> del API de Java), que se encargará de las labores criptográficas.
+  
+  * Datos a firmar, que será un objeto de la clase {{{../apidocs/es/mityc/firmaJava/libreria/xades/DataToSign.html}DataToSign}} de la librería MITyCLibXAdES.
+
+  * Objeto que se encarga de realizar la firma, que será una instancia de la clase {{{../apidocs/es/mityc/firmaJava/libreria/xades/FirmaXML.html}FirmaXML}} de la librería MITyCLibXAdES.
+  
+  []
+
+  Los tres primeros elementos (certificado, clave y proveedor) podrían ser obtenidos 
+de diferentes formas. En el ejemplo, la forma de obtenerlo es haciendo uso de
+la librería <MITyCLibAPI>, para lo que habría que seguir los siguientes pasos:
+
+  [[1]] Obtener un gestor de claves (instancia de la clase <IPKStoreManager> de la librería MITyCLibAPI).
+En el ejemplo se utiliza un almacén PKCS#12 aunque se podría haber usado otro tipo de almacén: 
+  
++---+
+IPKStoreManager storeManager = null;
+try {
+    KeyStore ks = KeyStore.getInstance("PKCS12");
+    ks.load(this.getClass().getResourceAsStream(PKCS12_RESOURCE), PKCS12_PASSWORD.toCharArray());
+    storeManager = new KSStore(ks, new PassStoreKS(PKCS12_PASSWORD));
+} catch (KeyStoreException ex) {
+    (... Error al generar el KeyStore PKCS12 ...)
+} catch (NoSuchAlgorithmException ex) {
+    (... Error al generar el KeyStore PKCS12 ...)
+} catch (CertificateException ex) {
+    (... Error al generar el KeyStore PKCS12 ...)
+} catch (IOException ex) {
+    (... Error al generar el KeyStore PKCS12 ...)
+}
++---+
+
+  [[2]] Obtener el certificado con el que se desea firmar, utilizando para ello 
+el gestor de claves obtenido anteriormente:
+
++---+
+List<X509Certificate> certs = null;
+try {
+    certs = storeManager.getSignCertificates();
+} catch (CertStoreException ex) {
+    (... Error al obtener los certificados de firma ...)
+}
+if ((certs == null) || (certs.size() == 0)) {
+    (... Error, lista de certificados vacía ...)
+}
+X509Certificate certificate = certs.get(0);
++---+
+
+  [[3]] Obtención de la clave privada asociada al certificado anterior:
+
++---+
+PrivateKey privateKey;
+try {
+    privateKey = storeManager.getPrivateKey(certificate);
+} catch (CertStoreException e) {
+    (... Error al acceder al almacén ...)
+}
+
++---+  
+  
+  [[4]] Obtención del provider encargado de realizar las funciones criptográficas:
+
++---+
+Provider provider = storeManager.getProvider(certificate);
++---+
+
+  []
+
+  En este momento ya tenemos los tres elementos necesarios para realizar la firma
+que son comunes a todos los tipos y formatos de firma. Lo siguiente que necesitaríamos
+es obtener los datos a firmar y el objeto que realizará la firma. Puesto que la
+obtención de estos elementos depende del tipo y formato de firma a usar, se 
+delegará a las clases hijas que implementen un ejemplo de firma concreto que
+implementen o sobreescriban los métodos correspondientes:
+
+  * En el caso de la obtención de los datos a firmar, se proporciona un método abstracto:
+
++---+
+protected abstract DataToSign createDataToSign();
++---+
+
+  * En el caso de la obtención del objeto encargado de firmar, se proporciona una
+implementación básica que cualquier clase hija podría sobreescribir en el caso
+en que fuera necesario, ya que no siempre lo es:
+
++---+
+protected FirmaXML createFirmaXML() {
+    return new FirmaXML();
+}
++---+
+
+  []
+  
+  Una vez obtenidos todos los elementos necesarios, estaríamos en disposición de
+realizar la firma. Para ello habría que realizar lo siguiente:
+
++---+
+DataToSign dataToSign = (... Objeto obtenido mediante el método abstracto <createDataToSign> ...)  
+FirmaXML firma = (... Objeto obtenido mediante el método <createFirmaXML> ...)  
+Document docSigned = null;
+try {
+    Object[] res = firma.signFile(certificate, dataToSign, privateKey, provider);
+    docSigned = (Document) res[0];
+} catch (Exception ex) {
+    (... Error al realizar la firma ...)
+}
++---+
+
+  Como se puede ver en el fragmento de código anterior, el resultado de la
+operación de firma es un documento XML representado mediante un objeto de la clase
+<org.w3c.dom.Document> del API de Java.
+
+  Por último quedaría tratar la firma de la manera que resulte adecuada. En el
+ejemplo se guarda la firma en un fichero (se podría hacer cualquier otro tratamiento 
+como escribir en una base de datos), para lo que en el ejemplo se proporcionan
+dos alternativas:
+
+  * Un método que se basa en una transformada XML. Este método es inseguro y habría 
+que utilizarlo con cuidado, ya que dependiendo del transformador que se esté usando 
+podría dar problemas con la validez de la firma:
+
++---+ 
+private void saveDocumentToFileUnsafeMode(Document document, String pathfile);
++---+
+
+  * Un método que se basa en el método <saveDocumentToOutputStream> de 
+que se proporciona en la clase de utilidades 
+{{{../apidocs/es/mityc/firmaJava/libreria/utilidades/UtilidadTratarNodo.html}UtilidadTratarNodo}}
+de la librería MITyCLibXAdES, que no es más que un wrapper de una utilidad que 
+proporciona XMLSec. Siempre que sea posible se recomienda utilizar esta implementación:
+
++---+ 
+private void saveDocumentToFile(Document document, String pathfile);
++---+
