@@ -1,0 +1,111 @@
+            ------
+            Ejemplo de validación completa de una firma
+            ------
+            Ministerio de Industria, Turismo y Comercio
+            ------
+
+Ejemplo de validación completa de una firma
+
+  El objetivo de este ejemplo es mostrar los pasos necesarios para realizar una 
+validación completa de una firma electrónica. Una validación completa incluye validación de políticas de firma,
+validación de la firma propiamente dicha y comprobación del emisor del certificado de firma, concretamente si 
+dicho emisor está declarado como de confianza. Eventualmente, una validación completa incluye también la 
+comprobación del estado de revocación del certificado de firma vía OCSP, pero no lo incluimos en éste ejemplo 
+debido a que ya existe un ejemplo de consulta OCSP dentro de la librería OCSP.
+Dicha clase emplea recursos de la librería XAdES para comprobar que la firma es válida, recursos de la librería 
+llamada MITyCLibTrust para comprobar si la CA emisora es confiable. El ejemplo de validación devuelve información
+relativa a la firma, junto al resultado de validación de política y si el certificado de firma es confiable. 
+El código completo del ejemplo se puede ver {{{../xref-test/es/mityc/javasign/xades/examples/validations/CompleteValidation.html}aquí}}.
+También se puede ver el Javadoc asociado al ejemplo 
+{{{../testapidocs/es/mityc/javasign/xades/examples/validations/CompleteValidation.html}aquí}}.
+
+  Dicho ejemplo muestra el proceso de validación de cinco ficheros contenidos dentro de los recursos de test que
+recogen cinco situaciones distintas, una firma válida, una firma no válida, una firma válida firmada con un 
+certificado emitido por una CA inventada, una firma que no cumple la política de ejemplo y una factura electrónica
+que incluye la política de firma de factura.
+Se trata de la validación de una firma válida y una firma alterada. El ejemplo simplemente recupera las firmas
+como recursos de clase:
+
++---+
+EjemploXADESValidacionComp p = new EjemploXADESValidacionComp();
+System.out.println("\nValidando una firma:");
+p.validarFichero(p.getClass().getResourceAsStream(FICHERO_XADES_));
+System.out.println("\n-------------------------------------------------------\n");
++---+
+
+  A continuación, los parsea convirtiéndolos a formato "Document". Se ha eliminado el tratamiento de excepciones
+para mayor claridad:
+
++---+
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+dbf.setNamespaceAware(true); // Para que no se altere el orden de los atributos de nodo invalidando la firma 
+DocumentBuilder db = dbf.newDocumentBuilder();
+Document doc = db.parse(fichero);
++---+
+
+  Una vez se dispone del documento de firma, se configuran los validadores extra. en primer lugar, se instancia
+la clase encargada de validar una política inventada, que se limita a asegurar que el certificado de firma
+se encuentre dentro del peroiodo de validez. Puede ver la clase "MyPolicy" {{{../testapidocs/es/mityc/javasign/xades/examples/validations/MyPolicy.html}aquí}}.
+
++---+
+// Política de ejemplo
+ArrayList<IValidacionPolicy> arrayPolicies = new ArrayList<IValidacionPolicy> (1);
+IValidacionPolicy policy = new MyPolicy();
+arrayPolicies.add(policy);
++---+
+
+  A continuación, se instancia la clase encargada de comprobar si la entidad emisora del certificado de firma se
+encuentra dentro de una lista predefinida de autoridades certificadoras. De este modo, se puede informar de
+manera automática si el certificado se considera confiable o por el contrario es el usuario el que debe comprobar
+que la información incluida en dicho certificado es verídica.
+
++---+
+// Validación extra de confianza de certificados
+truster = TrustFactory.getInstance().getTruster(TRUSTER_NAME);
+if (truster == null) {
+    System.out.println("No se encontro el validador de confianza");
+}
++---+
+
+  La clase TrustFactory accede a una serie de recursos de clase contenidos dentro de una carpeta llamada "trust". 
+Dentro de esta carpeta se encuentra un fichero de propiedades llamado "trust.properties" que definen las clases
+encargadas de realizar las distintas validaciones de las que se compone el truster. En cuanto a la constante TRUSTER_NAME,
+indica el nombre del truster a utilizar de los definidos en el fichero "trust.properties". Puede observar el código de
+ejemplo de dicha clase {{{../testapidocs/es/mityc/javasign/xades/examples/MyPropsTruster.html}aquí}}.
+Ésta clase enlaza con un fichero de propiedades llamado mytruster.properties donde se encuentran listados todos
+los certificados de CA declarados como de confianza y la ruta donde se encuentran disponibles como recurso. Para más
+información sobre validadores de confianza se recomienda leer la documentación de la librería MITyCLibTrust.
+
+  Seguidamente se componen todos los validadores extra bajo una única estructura, 
+  {{{../apidocs/es/mityc/firmaJava/libreria/xades/ExtraValidators.html}"ExtraValidators"}}.
+  Un validador de estado de certificado vía OCSP sería el segundo parámetro del método indicado como null.
+
++---+
+// Validadores extra
+ExtraValidators validator = new ExtraValidators(arrayPolicies, null, truster);
++---+
+
+   Para concluir, se lanza la validación mediante una instancia de la clase
+   {{{../apidocs/es/mityc/firmaJava/libreria/xades/ValidarFirmaXML.html}ValidarFirmaXML}}
+   y finalmente se muestra el resultado.
+  
++---+
+try {
+    ValidarFirmaXML vXml = new ValidarFirmaXML();
+    results = vXml.validar(doc, "./", validator) ;
+} catch(Exception e){
+    e.printStackTrace();
+}
++---+
+
+  Como se puede ver, el método <validar> de la clase {{{../apidocs/es/mityc/firmaJava/libreria/xades/ValidarFirmaXML.html}ValidarFirmaXML}}
+  recibe tres parámetros, que son los siguientes:
+  
+     [[1]] Documento con la firma XAdES a validar.
+     
+     [[2]] URI base donde se encuentran aquellos recursos relativos que aparecen en 
+     la firma (por ejemplo, los ficheros de complemento de información en una firma XADES-C). 
+     En este caso se utiliza el directorio actual donde se ejecuta el ejemplo, 
+     indicado por "./". 
+     
+     [[3]] Validadores a aplicar (tanto de confianza como de políticas) a la firma.

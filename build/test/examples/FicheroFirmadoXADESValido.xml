@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documento><parts Encoding="urn:ietf-org:base64" FileName="IExplorer.lnk" Id="fichero1">TAAAAAEUAgAAAAAAwAAAAAAAAEabAAAAIAAAALy7+1jgPscBLDE5R1u4yQGAEBcymmHJAaisCQAAAAAAAQAAAAAAAAAAAAAAAAAAACUBFAAfUOBP0CDqOmkQotgIACswMJ0ZAC9DOlwAAAAAAAAAAAAAAAAAAAAAAAAAWAAxAAAAAACIOqd4EQBBUkNISVZ+MQAAQAADAAQA7743Nk5ZiDqneBQAAABBAHIAYwBoAGkAdgBvAHMAIABkAGUAIABwAHIAbwBnAHIAYQBtAGEAAAAYAFIAMQAAAAAAhjrbcBAASU5URVJOfjEAADoAAwAEAO++NzZvWog6r3UUAAAASQBuAHQAZQByAG4AZQB0ACAARQB4AHAAbABvAHIAZQByAAAAGABMADIAqKwJAJM5LSsgAGlleHBsb3JlLmV4ZQAAMAADAAQA7743Nm9aiDqHeBQAAABpAGUAeABwAGwAbwByAGUALgBlAHgAZQAAABwAAABlAAAAHAAAAAEAAAAcAAAALQAAAAAAAABkAAAAEQAAAAMAAAAVbStIEAAAAABDOlxBcmNoaXZvcyBkZSBwcm9ncmFtYVxJbnRlcm5ldCBFeHBsb3JlclxpZXhwbG9yZS5leGUAADwALgAuAFwALgAuAFwALgAuAFwAQQByAGMAaABpAHYAbwBzACAAZABlACAAcAByAG8AZwByAGEAbQBhAFwASQBuAHQAZQByAG4AZQB0ACAARQB4AHAAbABvAHIAZQByAFwAaQBlAHgAcABsAG8AcgBlAC4AZQB4AGUAKQBDADoAXABBAHIAYwBoAGkAdgBvAHMAIABkAGUAIABwAHIAbwBnAHIAYQBtAGEAXABJAG4AdABlAHIAbgBlAHQAIABFAHgAcABsAG8AcgBlAHIAEAAAAAUAAKAmAAAAhQAAAGAAAAADAACgWAAAAAAAAABwYzgxNDkAAAAAAAAAAAAAJLMRgdUZu0+zp2OjPMVZSJy7Tk1MJN4RqG0AMAWZlfYksxGB1Rm7T7OnY6M8xVlInLtOTUwk3hGobQAwBZmV9gAAAAA=</parts><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature627956">
+<ds:SignedInfo Id="Signature-SignedInfo309808">
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></ds:CanonicalizationMethod>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></ds:SignatureMethod>
+<ds:Reference Id="SignedPropertiesID246451" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature627956-SignedProperties1143">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod>
+<ds:DigestValue>OQT4bK7WzKWMr2CeUoUAysouVXY=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference URI="#Certificate1197966">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod>
+<ds:DigestValue>JgH5WLT/OFicMfvu54s22b4SfNM=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference Id="Reference-ID-980925" URI="#fichero1">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod>
+<ds:DigestValue>L1Yu/GhxPMfbDwHblEkBMFmhcag=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue Id="SignatureValue592033">
+F15j1kMP8pNOSG/abFpzwReGj9cFByTjvSM9QJnB64cNNnQ0itgRjWAEuUGqKCiFPmhc1H+a/LON
+bFTtdBWan6SLIU3i6cSJoBMff4LZZqxe09jd2rKXl3HKoRQLnfAoaQjJ9W5FuUmXNS7D7ICQb5Fa
+aY7pQwKK9VK1ldnSLC4=
+</ds:SignatureValue>
+<ds:KeyInfo Id="Certificate1197966">
+<ds:X509Data>
+<ds:X509Certificate>
+MIID0jCCAzugAwIBAgIBejANBgkqhkiG9w0BAQUFADByMQswCQYDVQQGEwJFUzEPMA0GA1UECBMG
+TWFkcmlkMQ8wDQYDVQQHEwZNYWRyaWQxDjAMBgNVBAoTBU1JVHlDMRswGQYDVQQLExJNSVR5QyBE
+TkllIFBydWViYXMxFDASBgNVBAMTC0NBIHVzdWFyaW9zMB4XDTA5MDMwMjE3NDQwOFoXDTEwMDMw
+MjE3NDQwOFowcTELMAkGA1UEBhMCRVMxDzANBgNVBAgTBk1hZHJpZDEPMA0GA1UEBxMGTWFkcmlk
+MQ4wDAYDVQQKEwVNSVR5QzEbMBkGA1UECxMSTUlUeUMgRE5JZSBQcnVlYmFzMRMwEQYDVQQDEwpV
+c3VhcmlvIDQ2MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDS59u2oVg2uU9+4DjJERg42d9c
+n+S4NWIS2FiwAtjqhv92FQNw3Z2UZQKevnXccGdsNi6JN84LfOmDVvMbvx9iS9CPVrc9/LnTtrfX
+GkHj1Um08zW9ZSHfnK4pIpnNeU68d5WSNIeg8wXpT+MnNDeOBljglLm6AdsMPortWStasQIDAQAB
+o4IBdzCCAXMwCQYDVR0TBAIwADALBgNVHQ8EBAMCBeAwHQYDVR0OBBYEFAl7axxxSHPg/mS5SpZ/
+/s35YXQFMIGYBgNVHSMEgZAwgY2AFPWhaqh3T1uxBIynfkjxDp/Fdo8boXKkcDBuMQ8wDQYDVQQI
+EwZNYWRyaWQxDzANBgNVBAcTBk1hZHJpZDEOMAwGA1UEChMFTUlUeUMxGzAZBgNVBAsTEk1JVHlD
+IEROSWUgUHJ1ZWJhczEQMA4GA1UEAxMHUm9vdCBDQTELMAkGA1UEBhMCRVOCAQMwCQYDVR0RBAIw
+ADA2BgNVHRIELzAthitodHRwOi8vbWluaXN0ZXItOGpneHk5Lm1pdHljLmFnZS9QS0kvQ0EuY3J0
+MD0GA1UdHwQ2MDQwMqAwoC6GLGh0dHA6Ly9taW5pc3Rlci04amd4eTkubWl0eWMuYWdlL1BLSS9j
+cmwuY3JsMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDANBgkqhkiG9w0BAQUFAAOBgQBu
+imTMUG6QgGEkUa5NRuTGSIGSYxS7f+JdaAtz9J9WqAZ8jvX5oC3GsMAdTMy7U9X+ZxtyRT6IZZ+E
+a8WOu9FGLKZnV+I0t6yoQ+2rQ/TJN6qRnvTZNI2AJKNbRLsJg+NY/tNPfcCULidOJq2yEV31NsJV
++xu5APj95CqnLGgvCg==
+</ds:X509Certificate>
+</ds:X509Data>
+<ds:KeyValue>
+<ds:RSAKeyValue>
+<ds:Modulus>
+0ufbtqFYNrlPfuA4yREYONnfXJ/kuDViEthYsALY6ob/dhUDcN2dlGUCnr513HBnbDYuiTfOC3zp
+g1bzG78fYkvQj1a3Pfy507a31xpB49VJtPM1vWUh35yuKSKZzXlOvHeVkjSHoPMF6U/jJzQ3jgZY
+4JS5ugHbDD6K7VkrWrE=
+</ds:Modulus>
+<ds:Exponent>AQAB</ds:Exponent>
+</ds:RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+<ds:Object Id="Signature627956-Object150371"><etsi:QualifyingProperties Target="#Signature627956"><etsi:SignedProperties Id="Signature627956-SignedProperties1143"><etsi:SignedSignatureProperties><etsi:SigningTime>2009-04-21T19:00:02+02:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod><ds:DigestValue>2p+5usg8nwgF+QYTlaU3a2ZRhrc=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=CA usuarios,OU=MITyC DNIe Pruebas,O=MITyC,L=Madrid,ST=Madrid,C=ES</ds:X509IssuerName><ds:X509SerialNumber>122</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></documento>

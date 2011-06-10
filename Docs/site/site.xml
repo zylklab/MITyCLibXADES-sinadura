@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MITyCLibXAdES">
+
+  <bannerLeft>
+    <name>MITyCLibXAdES</name>
+    <src>images/LogoMITyCLiBXAdES.png</src>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Avanza2</name>
+    <src>images/banner_avanza2.gif</src>
+  </bannerRight>
+
+  <publishDate position="none"/>
+
+  <version position="right"/>
+  
+  <body>
+    <links>
+      <item name="MITyCLibAPI" href="../MITyCLibAPI/index.html" />
+      <item name="MITyCLibOCSP" href="../MITyCLibOCSP/index.html" />
+      <item name="MITyCLibTrust" href="../MITyCLibTrust/index.html" />
+      <item name="MITyCLibTSA" href="../MITyCLibTSA/index.html" />
+      <item name="MITyCLibPolicy" href="../MITyCLibPolicy/index.html" />
+    </links>
+
+    <breadcrumbs>
+      <item name="MITyCLibXADES" href="./index.html"/>
+    </breadcrumbs>
+
+    <menu name="MITyCLibXAdES">
+      <item name="Introducción" href="index.html"/>
+      <item name="FAQ" href="faq.html"/>
+    </menu>
+
+    <menu name="Ejemplos de uso">
+      <item name="Firma por tipos" href="integrator-guide/sign-types.html">
+        <item name="Detached" href="integrator-guide/detached-sign.html"/>
+        <item name="Enveloped" href="integrator-guide/enveloped-sign.html"/>
+        <item name="Enveloping" href="integrator-guide/enveloping-sign.html"/>
+        <item name="Mixta" href="integrator-guide/mixed-sign.html"/>
+      </item>
+      <item name="Firma por formatos" href="integrator-guide/sign-formats.html">
+        <item name="XAdES-BES" href="integrator-guide/xades-bes-sign.html"/>
+        <item name="XAdES-EPES" href="integrator-guide/xades-epes-sign.html"/>
+        <item name="XAdES-T" href="integrator-guide/xades-t-sign.html"/>
+        <item name="XAdES-C" href="integrator-guide/xades-c-sign.html"/>
+        <item name="XAdES-X" href="integrator-guide/xades-x-sign.html"/>
+        <item name="XAdES-XL" href="integrator-guide/xades-xl-sign.html"/>
+        <!-- item name="XAdES-A" href="integrator-guide/xades-a-sign.html"/-->
+      </item>
+      <item name="Validaciones" href="integrator-guide/validations.html">
+        <item name="Validación básica de una firma" href="integrator-guide/basic-validation.html"/>
+        <item name="Validación completa de una firma" href="integrator-guide/complete-validation.html"/>
+      </item>
+    </menu>
+
+    <menu ref="reports"/>
+	
+  </body>
+</project>
