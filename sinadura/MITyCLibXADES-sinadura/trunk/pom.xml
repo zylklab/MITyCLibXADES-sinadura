@@ -121,7 +121,7 @@
 		<repository>
 			<id>sinadura-micyt</id>
 			<name>sinadura-micyt</name>
-			<url>http://nexus-maven.zylk.net:8081/nexus/content/repositories/sinadura-micyt</url>
+			<url>https://services.zylk.net/nexus/content/repositories/sinadura-micyt</url>
 			<layout>default</layout>
 			<releases>
 				<enabled>true</enabled>
