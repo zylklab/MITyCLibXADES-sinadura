@@ -70,10 +70,10 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>es.mityc.jumbo.adsi</groupId>
-			<artifactId>xmlsec-1.4.2-ADSI</artifactId>
-			<version>1.0</version>
-			<scope>compile</scope>
+			<groupId>org.apache.commons</groupId>
+		  <artifactId>xmlsec-sinadura</artifactId>
+		  <version>1.4.2</version>
+		  <scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>xalan</groupId>
