@@ -71,7 +71,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
-		  <artifactId>xmlsec-sinadura</artifactId>
+		  <artifactId>xmlsec-mityc-sinadura</artifactId>
 		  <version>1.4.2</version>
 		  <scope>compile</scope>
 		</dependency>
