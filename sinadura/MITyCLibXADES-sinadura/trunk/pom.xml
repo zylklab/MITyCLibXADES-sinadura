@@ -144,10 +144,12 @@
 		<name>Ministerio de Industria, Turismo y Comercio</name>
 		<url>http://www.mityc.es</url>
 	</organization>
+	
+	<!-- nota:  esto esta para resolver el parent de los mityc* -->
 	<repositories>
 		<repository>
-			<id>sinadura-micyt</id>
-			<name>sinadura-micyt</name>
+			<id>sinadura-dependencies</id>
+			<name>sinadura-dependencies</name>
 			<url>https://services.zylk.net/nexus/content/repositories/sinadura-micyt</url>
 			<layout>default</layout>
 			<releases>
@@ -160,12 +162,12 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
+ 	
 	<distributionManagement>
 		<repository>
 			<id>maven-nexus-zylk</id>
-			<name>Maven Nexus at Zylk</name>
-			<url>https://services.zylk.net/nexus/content/repositories/sinadura-micyt</url>
+			<name>sinadura-releases</name>
+			<url>https://services.zylk.net/nexus/content/repositories/sinadura-releases</url>
 		</repository>
 	</distributionManagement>
 </project>
