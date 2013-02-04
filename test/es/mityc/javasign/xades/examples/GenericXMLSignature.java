@@ -136,7 +136,7 @@ public abstract class GenericXMLSignature {
              * Creación del objeto encargado de realizar la firma
              */
             FirmaXML firma = createFirmaXML();
-            Object[] res = firma.signFile(certificate, dataToSign, privateKey, provider);
+            Object[] res = firma.signFile(certificate, dataToSign, privateKey, provider, null, null, false);
             docSigned = (Document) res[0];
         } catch (Exception ex) {
             System.err.println("Error realizando la firma");

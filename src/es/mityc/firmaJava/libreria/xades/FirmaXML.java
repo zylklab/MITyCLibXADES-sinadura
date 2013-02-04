@@ -30,19 +30,29 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.Security;
+import java.security.cert.CertStore;
+import java.security.cert.CertStoreException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,7 +65,13 @@ import org.apache.xml.security.utils.Constants;
 import org.apache.xml.security.utils.IgnoreAllErrorHandler;
 import org.apache.xml.security.utils.XMLUtils;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
+import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.ocsp.BasicOCSPResp;
+import org.bouncycastle.ocsp.CertificateStatus;
+import org.bouncycastle.ocsp.OCSPException;
+import org.bouncycastle.ocsp.OCSPResp;
+import org.bouncycastle.tsp.TimeStampToken;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -92,15 +108,21 @@ import es.mityc.firmaJava.role.IClaimedRole;
 import es.mityc.firmaJava.ts.ConstantesTSA;
 import es.mityc.firmaJava.ts.TSCliente;
 import es.mityc.firmaJava.ts.TSClienteError;
+import es.mityc.firmaJava.ts.TSValidacion;
+import es.mityc.firmaJava.ts.TSValidator;
 import es.mityc.javasign.ConstantsXAdES;
 import es.mityc.javasign.certificate.CertStatusException;
 import es.mityc.javasign.certificate.ICertStatus;
+import es.mityc.javasign.certificate.ICertStatus.CERT_STATUS;
+import es.mityc.javasign.certificate.ICertStatusRecoverer;
 import es.mityc.javasign.certificate.IOCSPCertStatus;
 import es.mityc.javasign.certificate.IX509CRLCertStatus;
+import es.mityc.javasign.certificate.ocsp.OCSPLiveConsultant;
 import es.mityc.javasign.exception.SignMITyCException;
 import es.mityc.javasign.i18n.I18nFactory;
 import es.mityc.javasign.i18n.II18nManager;
 import es.mityc.javasign.pkstore.IPKStoreManager;
+import es.mityc.javasign.trust.TrustAbstract;
 import es.mityc.javasign.xml.refs.AbstractObjectToSign;
 import es.mityc.javasign.xml.refs.InternObjectToSign;
 import es.mityc.javasign.xml.refs.ObjectToSign;
@@ -211,9 +233,10 @@ public class FirmaXML {
             X509Certificate firmaCertificado,
             DataToSign xml,
             IPKStoreManager storeManager,
-            OutputStream salida) throws Exception{
+            OutputStream salida, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception{
+    	
     	PrivateKey pk = storeManager.getPrivateKey(firmaCertificado);
-		signFile(firmaCertificado, xml, pk, salida, storeManager.getProvider(firmaCertificado));
+		signFile(firmaCertificado, xml, pk, salida, storeManager.getProvider(firmaCertificado), truster, tsaOcspUrl, zain);
     }
 
 //    public Document sign2Doc(
@@ -237,15 +260,16 @@ public class FirmaXML {
             DataToSign xml,
             IPKStoreManager storeManager,
             String destino,
-            String nombreArchivo) throws Exception{
+            String nombreArchivo, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception{
+    	
     	PrivateKey pk = storeManager.getPrivateKey(firmaCertificado);
-    	return signFile(firmaCertificado, xml, pk, destino, nombreArchivo, storeManager.getProvider(firmaCertificado));
+    	return signFile(firmaCertificado, xml, pk, destino, nombreArchivo, storeManager.getProvider(firmaCertificado), truster, tsaOcspUrl, zain);
     }
     
 	private void signFile(X509Certificate certificadoFirma, DataToSign xml,
-            PrivateKey pk, OutputStream salida, Provider provider) throws Exception {
+            PrivateKey pk, OutputStream salida, Provider provider, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
 
-    	Object[] res = signFile(certificadoFirma, xml, pk, provider);
+    	Object[] res = signFile(certificadoFirma, xml, pk, provider, truster, tsaOcspUrl, zain);
 
     	if (res[1] != null)
         	throw new ClienteError(I18n.getResource(ConstantesXADES.LIBRERIAXADES_FIRMAXML_ERROR_43));
@@ -281,13 +305,14 @@ public class FirmaXML {
 
     
 	private boolean signFile(X509Certificate certificadoFirma, DataToSign xml,
-    		PrivateKey pk, String destino, String nombreArchivo, Provider provider) throws Exception {
+    		PrivateKey pk, String destino, String nombreArchivo, Provider provider, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
+		
 		if (destino == null || nombreArchivo == null) {
 			// No se proporcionaron los datos de firma
 			throw new Exception(I18n.getResource(ConstantesXADES.LIBRERIAXADES_FIRMAXML_ERROR_31));
 		}
 		
-    	Object[] res = signFile(certificadoFirma, xml, pk, provider);
+    	Object[] res = signFile(certificadoFirma, xml, pk, provider, truster, tsaOcspUrl, zain);
         
 //        // Si se firma XADES-C exclusivamente, se guardan las respuestaOCSP y los certificados 
 //        // con un nombre asociado al fichero de firma y en la misma ruta temporal
@@ -317,8 +342,9 @@ public class FirmaXML {
         return true ;
     }
 
+	// Añadidos los parametros truster y tsaOcspUrl, para añadir todas las ocsps de la cadena del timestamp (compatibilidad ZAIN)
 	public Object[] signFile(X509Certificate certificadoFirma, DataToSign dataToSign,
-            PrivateKey pk, Provider provider) throws Exception {
+            PrivateKey pk, Provider provider, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
 
 		ArrayList<RespYCerts> respuestas = new ArrayList<RespYCerts>();
 		
@@ -568,6 +594,10 @@ public class FirmaXML {
 
         log.debug(I18n.getResource(ConstantesXADES.LIBRERIAXADES_FIRMAXML_DEBUG_1) + xadesT);
 
+        // START - Modificacion XADES-XL (compatibilidad zain).
+        X509Certificate tsSigner = null;
+        // END - Modificacion XADES-XL (compatibilidad zain).        
+        
         if(xadesT) {
 
             try
@@ -593,7 +623,28 @@ public class FirmaXML {
 
 	                // Se añaden los elementos propios de la firma XADES-T
 	                byte[] byteSignature = UtilidadTratarNodo.obtenerByteNodo(firma.getElement(), ConstantesXADES.SCHEMA_DSIG, ConstantesXADES.SIGNATURE_VALUE, CanonicalizationEnum.C14N_OMIT_COMMENTS, 5);
-	                addXadesT(firma.getElement(), firma.getId(), tsCli.generarSelloTiempo(byteSignature)) ;
+	                
+        	        // Modificacion XADES-XL (compatibilidad ZAIN)
+	                byte[] selloTiempo = tsCli.generarSelloTiempo(byteSignature);
+	                TSValidacion tsValidacion = TSValidator.validarSelloTiempo(byteSignature, selloTiempo);
+	                
+	                TimeStampToken tst = tsValidacion.getTst();
+    				try {
+    					CertStore cs = tst.getCertificatesAndCRLs("Collection", null);
+    					Collection<? extends Certificate> certs = cs.getCertificates(null);
+    					if (certs.size() > 0) {
+    						Certificate cert = certs.iterator().next();
+    						if (cert instanceof X509Certificate) {
+    							tsSigner = ((X509Certificate) cert);
+    						}
+    					}
+    				} catch (NoSuchAlgorithmException ex) {
+    				} catch (NoSuchProviderException ex) {
+    				} catch (CMSException ex) {
+    				} catch (CertStoreException ex) {
+    				}
+	    				
+	                addXadesT(firma.getElement(), firma.getId(), selloTiempo);
             	}
             	else
             	{
@@ -623,11 +674,56 @@ public class FirmaXML {
         			}
         			// Añadimos XADES-C
         			
-        			respuestas = convertICertStatus2RespYCerts(dataToSign.getCertStatusManager().getCertChainStatus(certificadoFirma));
         			
-        			// TODO: si alguna de las respuestas de la cadena de certificación es revocado se deberá parar la firma
+        	        // Modificacion XADES-XL (compatibilidad ZAIN)
+        			List<ICertStatus> allCertList;
         			
-        			addXadesC(firma.getElement(), respuestas, schema, algDigestXML);
+        			if (!zain) {
+        				// implementacion de xades XL original
+        				allCertList = dataToSign.getCertStatusManager().getCertChainStatus(certificadoFirma);
+        			
+        			} else {
+        				
+        				// implementacion de xades XL con todas las ocsps
+        				
+        				// Cadena de firma y de las ocsp
+	        			Map<String, ICertStatus> ocspStatusMap = new LinkedHashMap<String, ICertStatus>();
+	        			FirmaXMLAux.getListRec(certificadoFirma, dataToSign.getCertStatusManager(), ocspStatusMap);
+	
+	        			// TSA
+	        			String autoTsaOcspUrl = FirmaXMLAux.getOCSPURL(tsSigner);
+	        			if (autoTsaOcspUrl == null) {
+	        				log.info("no se ha podido obtener la url del ocsp responder de la TSA");
+	        				if (tsaOcspUrl != null && !tsaOcspUrl.equals("")) {
+	        					autoTsaOcspUrl = tsaOcspUrl;	
+	        				} else {
+	        					throw new IOException("Error: Es necesario especificar la url del OCSP responder de la cadena de la TSA.");
+	        				}
+	        			}
+	
+	        			ICertStatusRecoverer tsaCertStatusRecoverer = new OCSPLiveConsultant(autoTsaOcspUrl, truster);
+	        			
+	        			FirmaXMLAux.getListRec(tsSigner, tsaCertStatusRecoverer, ocspStatusMap);
+	        			
+	
+	        			// Se revisa que todas las ocsps estan OK
+	        			allCertList = new ArrayList<ICertStatus>();
+	        			for (String key : ocspStatusMap.keySet()) {
+	        				ICertStatus certStatus = ocspStatusMap.get(key);
+	        				if (certStatus.getStatus().equals(CERT_STATUS.valid)) {
+	        					allCertList.add(certStatus);
+	        				} else {
+								// La comprobacion de revocacion del firmante ya se hace previamente así que este caso practicamente
+								// no se deberia dar (tendria que estar revocado un certificados intermedio, raiz, tsa o ocsp). 
+								throw new IOException("No se puede generar una firma XL. Estado de revocacion del certificado "
+										+ certStatus.getCertificate().getSubjectX500Principal() + ": " + certStatus.getStatus());
+	        				}
+						}
+        			}
+        			
+        			respuestas = convertICertStatus2RespYCerts(allCertList);
+        			
+        			addXadesC(firma.getElement(), respuestas, schema, algDigestXML, zain);
 
         		} 
         		else
@@ -721,7 +817,7 @@ public class FirmaXML {
 	            {
 	            	// Añadimos XADES-XL
 	            	
-	                addXadesXL(firma.getElement(), respuestas, schema);
+	                addXadesXL(firma.getElement(), respuestas, schema, zain);
 	            }
 	            catch (Exception e)
 	            {
@@ -1291,7 +1387,7 @@ public class FirmaXML {
     		//String respuestaID,
     		ArrayList<RespYCerts> respuestas,
     		XAdESSchemas schema,
-    		String algDigestXML)
+    		String algDigestXML, boolean zain)
     throws AddXadesException
     {
     	Document doc = firma.getOwnerDocument();
@@ -1448,8 +1544,19 @@ public class FirmaXML {
                 doc.createElementNS(xadesSchema, xadesNS + ConstantesXADES.DOS_PUNTOS + ConstantesXADES.OCSP_REFS);
         	CRLRefs elementCRLRefs = new CRLRefs(schema); 
         	
-        	for(int x = 0; x < size - 1; ++x) {
-        		
+
+	        // Modificacion XADES-XL (compatibilidad ZAIN)
+//			codigo original        	
+//        	for(int x = 0; x < size - 1; ++x) {
+        	
+        	// validacion ZAIN
+        	int sizeResp = size; 
+        	if (!zain) {
+        		sizeResp--;
+        	}
+
+        	for (int x = 0; x < sizeResp; ++x) {
+        	
         		RespYCerts respYCert = respuestas.get(x);
         		ICertStatus certStatus = respYCert.getCertstatus();
         		if (certStatus instanceof IOCSPCertStatus) {
@@ -1881,7 +1988,7 @@ public class FirmaXML {
      * @return Documento de firma con formato XADES-XL
      * @throws Exception
      */
-    private Document addXadesXL(Element firma, ArrayList<RespYCerts> respuestas, XAdESSchemas schema)
+    private Document addXadesXL(Element firma, ArrayList<RespYCerts> respuestas, XAdESSchemas schema, boolean zain)
     	throws AddXadesException
     	{
     	// Recogemos el nodo UnsignedSignatureProperties del cual dependen los nodos
@@ -1943,31 +2050,37 @@ public class FirmaXML {
 
 	        int nOcspResps = 0;
 	        int nCRLSResps = 0;
-            itResp = respuestas.iterator();
-	        hasNext = itResp.hasNext();
-	        while (hasNext) {
-        		RespYCerts resp = itResp.next();
-        		hasNext = itResp.hasNext();
-        		if (hasNext) {
-            		ICertStatus respStatus = resp.getCertstatus();
-	        		if (respStatus instanceof IOCSPCertStatus) {
-	        			nOcspResps++;
-	        			IOCSPCertStatus respOCSP = (IOCSPCertStatus) respStatus;
-	    	            Element valorElementoEncapsuladoOCSP = doc.createElementNS(xadesSchema, xadesNS + ConstantesXADES.DOS_PUNTOS + ConstantesXADES.ENCAPSULATED_OCSP_VALUE);
-	    	            valorElementoEncapsuladoOCSP.appendChild(
-	    	                    doc.createTextNode(new String(Base64Coder.encode(respOCSP.getEncoded()))));
-	    	            valorElementoEncapsuladoOCSP.setAttributeNS(null, ConstantesXADES.ID, resp.getIdRespStatus());
-	    	            valorElementOCSP.appendChild(valorElementoEncapsuladoOCSP);
-	        		}
-	        		else if (respStatus instanceof IX509CRLCertStatus) {
-	        			nCRLSResps++;
-	        			IX509CRLCertStatus respCRL = (IX509CRLCertStatus) respStatus;
-	        			try {
-	        				valorElementoCRL.addCRL(respCRL.getX509CRL(), resp.getIdRespStatus());
-						} catch (InvalidInfoNodeException ex) {
-							throw new AddXadesException("No se pudo generar nodo EncapsulatedCRLValue", ex);
-						}
-	        		}
+	        
+	        // Modificacion XADES-XL (compatibilidad ZAIN)
+            int sizeResp = respuestas.size();
+            
+            if (!zain) {
+            	sizeResp--;
+            }
+
+            // TODO revisar que el orden sigue siendo el mismo que con la implementacion anterior.
+        	for (int i = 0; i < sizeResp; i++) {
+
+        		RespYCerts resp = respuestas.get(i);
+
+        		ICertStatus respStatus = resp.getCertstatus();
+        		if (respStatus instanceof IOCSPCertStatus) {
+        			nOcspResps++;
+        			IOCSPCertStatus respOCSP = (IOCSPCertStatus) respStatus;
+    	            Element valorElementoEncapsuladoOCSP = doc.createElementNS(xadesSchema, xadesNS + ConstantesXADES.DOS_PUNTOS + ConstantesXADES.ENCAPSULATED_OCSP_VALUE);
+    	            valorElementoEncapsuladoOCSP.appendChild(
+    	                    doc.createTextNode(new String(Base64Coder.encode(respOCSP.getEncoded()))));
+    	            valorElementoEncapsuladoOCSP.setAttributeNS(null, ConstantesXADES.ID, resp.getIdRespStatus());
+    	            valorElementOCSP.appendChild(valorElementoEncapsuladoOCSP);
+        		}
+        		else if (respStatus instanceof IX509CRLCertStatus) {
+        			nCRLSResps++;
+        			IX509CRLCertStatus respCRL = (IX509CRLCertStatus) respStatus;
+        			try {
+        				valorElementoCRL.addCRL(respCRL.getX509CRL(), resp.getIdRespStatus());
+					} catch (InvalidInfoNodeException ex) {
+						throw new AddXadesException("No se pudo generar nodo EncapsulatedCRLValue", ex);
+					}
         		}
 	        }
 
@@ -2081,9 +2194,10 @@ public class FirmaXML {
      */
     public void countersignFile(X509Certificate firmaCertificado,
             DataToSign xml, IPKStoreManager storeManager, 
-            String nodoAFirmarId, String destino, String nombreArchivo) throws Exception {
+            String nodoAFirmarId, String destino, String nombreArchivo, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
+    	
     	PrivateKey pk = storeManager.getPrivateKey(firmaCertificado);
-    	Document doc = countersign(firmaCertificado, xml, nodoAFirmarId, pk, storeManager.getProvider(firmaCertificado));
+    	Document doc = countersign(firmaCertificado, xml, nodoAFirmarId, pk, storeManager.getProvider(firmaCertificado), truster, tsaOcspUrl, zain);
 
     	// Se guarda la firma en su destino
     	File fichero = new File(destino + nombreArchivo); 
@@ -2103,9 +2217,10 @@ public class FirmaXML {
 
     public void countersign2Stream(X509Certificate firmaCertificado,
             DataToSign xml, IPKStoreManager storeManager,
-            String nodoAFirmarId, OutputStream salida) throws Exception {
+            String nodoAFirmarId, OutputStream salida, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
+    	
     	PrivateKey pk = storeManager.getPrivateKey(firmaCertificado);
-    	Document doc = countersign(firmaCertificado, xml, nodoAFirmarId, pk, storeManager.getProvider(firmaCertificado));
+    	Document doc = countersign(firmaCertificado, xml, nodoAFirmarId, pk, storeManager.getProvider(firmaCertificado), truster, tsaOcspUrl, zain);
 
     	// Se guarda la firma en su destino
     	try {
@@ -2129,7 +2244,7 @@ public class FirmaXML {
      */
     private Document countersign(X509Certificate certificadoFirma,
     		DataToSign xml, String nodoAFirmarId, PrivateKey pk,
-    		Provider provider) throws Exception {
+    		Provider provider, TrustAbstract truster, String tsaOcspUrl, boolean zain) throws Exception {
 
     	Security.addProvider(new BouncyCastleProvider());
     	Document doc = xml.getDocument();
@@ -2275,7 +2390,7 @@ public class FirmaXML {
 
         // Se firma el documento generado, indicando el nodo padre y el identificador del nodo a firmar
         xml.setParentSignNode(counterSignatureId);
-    	Object[] res = signFile(certificadoFirma, xml, pk, provider);
+    	Object[] res = signFile(certificadoFirma, xml, pk, provider, truster, tsaOcspUrl, zain);
 		
 
     	doc = (Document) res[0];

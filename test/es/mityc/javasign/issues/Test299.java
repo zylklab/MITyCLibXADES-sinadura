@@ -115,7 +115,7 @@ public class Test299 extends ValidationBase {
 
 		    try {
 		    	FirmaXML firma = new FirmaXML();
-		    	Object[] res = firma.signFile(cert, data2Sign, iStore.getPrivateKey(cert), iStore.getProvider(cert));
+		    	Object[] res = firma.signFile(cert, data2Sign, iStore.getPrivateKey(cert), iStore.getProvider(cert), null, null, false);
 		    	doc = (Document) res[0];
 			} catch (Exception ex) {
 				throw new SigningException("Error realizando la firma", ex);
