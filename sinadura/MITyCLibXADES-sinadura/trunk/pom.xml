@@ -10,7 +10,7 @@
 	<artifactId>MITyCLibXADES-sinadura</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.4</version>
-	<name>MITyCLibXADES</name>
+	<name>MITyCLibXADES-sinadura</name>
 	<build>
 		<plugins>
 			<plugin>
@@ -41,7 +41,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
-			<artifactId>MITyCLibTSA</artifactId>
+			<artifactId>MITyCLibTSA-sinadura</artifactId>
 			<version>1.0.4</version>
 			<scope>compile</scope>
 		</dependency>
@@ -113,7 +113,7 @@
 		</dependency>
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
-			<artifactId>MITyCLibOCSP</artifactId>
+			<artifactId>MITyCLibOCSP-sinadura</artifactId>
 			<version>1.0.4</version>
 			<scope>test</scope>
 			<optional>true</optional>
