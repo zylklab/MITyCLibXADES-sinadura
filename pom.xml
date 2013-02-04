@@ -115,7 +115,7 @@
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibOCSP-sinadura</artifactId>
 			<version>1.0.4</version>
-			<scope>test</scope>
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
