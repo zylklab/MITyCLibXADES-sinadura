@@ -639,9 +639,13 @@ public class FirmaXML {
     						}
     					}
     				} catch (NoSuchAlgorithmException ex) {
+    					throw ex;
     				} catch (NoSuchProviderException ex) {
+    					throw ex;
     				} catch (CMSException ex) {
+    					throw ex;
     				} catch (CertStoreException ex) {
+    					throw ex;
     				}
 	    				
 	                addXadesT(firma.getElement(), firma.getId(), selloTiempo);
