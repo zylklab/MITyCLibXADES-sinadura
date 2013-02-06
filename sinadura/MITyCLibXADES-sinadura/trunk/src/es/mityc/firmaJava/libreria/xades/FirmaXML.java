@@ -627,26 +627,27 @@ public class FirmaXML {
         	        // Modificacion XADES-XL (compatibilidad ZAIN)
 	                byte[] selloTiempo = tsCli.generarSelloTiempo(byteSignature);
 	                TSValidacion tsValidacion = TSValidator.validarSelloTiempo(byteSignature, selloTiempo);
-	                
+
+	                // con el provider de sun (dejandolo a null) daba error en java 7
+	        		Provider prov = Security.getProvider("BC");
+	        		if (prov == null) {
+	        			Security.addProvider(new BouncyCastleProvider());
+	        		}
+	        		
 	                TimeStampToken tst = tsValidacion.getTst();
-    				try {
-    					CertStore cs = tst.getCertificatesAndCRLs("Collection", null);
-    					Collection<? extends Certificate> certs = cs.getCertificates(null);
-    					if (certs.size() > 0) {
-    						Certificate cert = certs.iterator().next();
-    						if (cert instanceof X509Certificate) {
-    							tsSigner = ((X509Certificate) cert);
-    						}
-    					}
-    				} catch (NoSuchAlgorithmException ex) {
-    					throw ex;
-    				} catch (NoSuchProviderException ex) {
-    					throw ex;
-    				} catch (CMSException ex) {
-    					throw ex;
-    				} catch (CertStoreException ex) {
-    					throw ex;
-    				}
+    				CertStore cs = tst.getCertificatesAndCRLs("Collection", "BC");
+    				Collection<X509Certificate> certs = (Collection<X509Certificate>) cs.getCertificates(null);    					
+    				for (X509Certificate cert : certs) {
+						try {
+							tst.validate(cert, "BC");
+							tsSigner = cert;
+							break;
+						} catch (Exception ex) {
+							// logger.log(Level.INFO, "controled exception", e);
+						}
+					}
+    				
+    				log.info("certificado firmante del timestamp:" + tsSigner.getSubjectX500Principal().getName());
 	    				
 	                addXadesT(firma.getElement(), firma.getId(), selloTiempo);
             	}
