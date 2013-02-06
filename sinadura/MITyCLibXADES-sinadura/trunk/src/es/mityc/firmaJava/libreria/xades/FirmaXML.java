@@ -694,22 +694,29 @@ public class FirmaXML {
         				// Cadena de firma y de las ocsp
 	        			Map<String, ICertStatus> ocspStatusMap = new LinkedHashMap<String, ICertStatus>();
 	        			FirmaXMLAux.getListRec(certificadoFirma, dataToSign.getCertStatusManager(), ocspStatusMap);
+	        			for (String key : ocspStatusMap.keySet()) {
+	        				log.info("Chain y ocsps: " + key);
+	        			}
 	
 	        			// TSA
 	        			String autoTsaOcspUrl = FirmaXMLAux.getOCSPURL(tsSigner);
 	        			if (autoTsaOcspUrl == null) {
-	        				log.info("no se ha podido obtener la url del ocsp responder de la TSA");
+	        				log.info("no se ha podido extraer la url del ocsp responder de la TSA");
 	        				if (tsaOcspUrl != null && !tsaOcspUrl.equals("")) {
-	        					autoTsaOcspUrl = tsaOcspUrl;	
+	        					autoTsaOcspUrl = tsaOcspUrl;
 	        				} else {
 	        					throw new IOException("Error: Es necesario especificar la url del OCSP responder de la cadena de la TSA.");
 	        				}
 	        			}
 	
+	        			log.info("url del OCSP responder de la cadena de la TSA a utilizar: " + autoTsaOcspUrl);
+	        			
 	        			ICertStatusRecoverer tsaCertStatusRecoverer = new OCSPLiveConsultant(autoTsaOcspUrl, truster);
 	        			
 	        			FirmaXMLAux.getListRec(tsSigner, tsaCertStatusRecoverer, ocspStatusMap);
-	        			
+	        			for (String key : ocspStatusMap.keySet()) {
+	        				log.info("Chain y ocsps + TSA y ocsps: " + key);
+	        			}
 	
 	        			// Se revisa que todas las ocsps estan OK
 	        			allCertList = new ArrayList<ICertStatus>();

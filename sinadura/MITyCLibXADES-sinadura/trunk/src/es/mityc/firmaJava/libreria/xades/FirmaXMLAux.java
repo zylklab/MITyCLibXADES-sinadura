@@ -43,8 +43,22 @@ import es.mityc.javasign.certificate.IX509CRLCertStatus;
 public class FirmaXMLAux {
 	
 	private static Log log = LogFactory.getLog(FirmaXMLAux.class);
-	
-	
+
+	/**
+	 * 
+	 * Añade al map (ocspStatusMap) todos los ICertStatus de la cadena (tanto los de la chain principal como los de los firmantes
+	 * de las respuestas ocsps).
+	 * 
+	 * @param cert
+	 * @param certStatusManager
+	 * @param ocspStatusMap
+	 * @throws CertStatusException
+	 * @throws CertStoreException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchProviderException
+	 * @throws IOException
+	 * @throws OCSPException
+	 */
 	public static final void getListRec(X509Certificate cert, ICertStatusRecoverer certStatusManager,
 			Map<String, ICertStatus> ocspStatusMap) throws CertStatusException, CertStoreException, NoSuchAlgorithmException,
 			NoSuchProviderException, IOException, OCSPException {
