@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Provider;
+import java.security.Security;
 import java.security.cert.CertStore;
 import java.security.cert.CertStoreException;
 import java.security.cert.Certificate;
@@ -21,6 +23,7 @@ import org.bouncycastle.asn1.DERObject;
 import org.bouncycastle.asn1.DERObjectIdentifier;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.x509.X509Extensions;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.ocsp.BasicOCSPResp;
 import org.bouncycastle.ocsp.OCSPException;
 import org.bouncycastle.ocsp.OCSPResp;
@@ -59,6 +62,12 @@ public class FirmaXMLAux {
 
 	private static final X509Certificate getOCSPSigner(ICertStatus respStatus) throws IOException, OCSPException, CertStoreException, NoSuchAlgorithmException, NoSuchProviderException {
 		
+		// con el provider de sun (dejandolo a null) daba error en java 7
+		Provider provider = Security.getProvider("BC");
+		if (provider == null) {
+			Security.addProvider(new BouncyCastleProvider());
+		}
+		
 		X509Certificate ocspSignerCert = null;
 		
 		if (respStatus instanceof IOCSPCertStatus) {
@@ -67,13 +76,13 @@ public class FirmaXMLAux {
 			OCSPResp ocspResp = new OCSPResp(ocspStatus.getEncoded());
 			BasicOCSPResp basicResponse = (BasicOCSPResp) ocspResp.getResponseObject();
 			
-			CertStore cs = basicResponse.getCertificates("Collection", null);
+			CertStore cs = basicResponse.getCertificates("Collection", "BC");
 			Collection<? extends Certificate> certs = cs.getCertificates(null);
 			
 			for (Certificate cert : certs) {
 				if (cert instanceof X509Certificate) {
 					ocspSignerCert = ((X509Certificate) cert);
-					if (basicResponse.verify(ocspSignerCert.getPublicKey(), null)) {
+					if (basicResponse.verify(ocspSignerCert.getPublicKey(), "BC")) {
 						return ocspSignerCert;
 					}
 				}
