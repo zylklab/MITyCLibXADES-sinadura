@@ -36,6 +36,10 @@ import es.mityc.javasign.certificate.IX509CRLCertStatus;
 
 
 
+/**
+ * Funciones auxiliares para la clase FirmaXML (para la compatibilidad de las firmas XL en ZAIN) 
+ *
+ */
 public class FirmaXMLAux {
 	
 	private static Log log = LogFactory.getLog(FirmaXMLAux.class);
