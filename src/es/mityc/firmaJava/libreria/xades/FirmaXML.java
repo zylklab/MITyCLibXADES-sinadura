@@ -594,9 +594,7 @@ public class FirmaXML {
 
         log.debug(I18n.getResource(ConstantesXADES.LIBRERIAXADES_FIRMAXML_DEBUG_1) + xadesT);
 
-        // START - Modificacion XADES-XL (compatibilidad zain).
-        X509Certificate tsSigner = null;
-        // END - Modificacion XADES-XL (compatibilidad zain).        
+        X509Certificate tsSigner = null;        
         
         if(xadesT) {
 
@@ -732,6 +730,13 @@ public class FirmaXML {
 	        				}
 						}
         			}
+        			
+					// Con "zain" a "true" el listado de respuestas ya no es una lista ordenada con los cert de la chain
+					// principal, si no una lista con la chain principal + la de la tsa + los cert auxiliares de las ocsp.
+					// El primer elemento de la lista sigue siendo el certificado firmante, pero el ultimo ya NO es el certificado
+					// raiz de la cadena principal. De hecho ya no deberia tratarse como una chain sino como una lista "plana" de
+					// certificados.
+        			// Debido a esto se que han modificado los metodos addXadesC y addXadesXL.
         			
         			respuestas = convertICertStatus2RespYCerts(allCertList);
         			
@@ -2070,7 +2075,6 @@ public class FirmaXML {
             	sizeResp--;
             }
 
-            // TODO revisar que el orden sigue siendo el mismo que con la implementacion anterior.
         	for (int i = 0; i < sizeResp; i++) {
 
         		RespYCerts resp = respuestas.get(i);
@@ -2850,6 +2854,8 @@ public class FirmaXML {
      */
     public Document addURIXadesC(Element firma, ArrayList<NombreElementos> listaArchivos, String baseUri) throws FirmaXMLError
     {
+		// TODO Modificacion XADES-XL (compatibilidad zain). Si algun dia se permiten realizar firmas C (if xadesC && !xadesXL) en
+		// Sinadura, habria que revisar este metodo. 
     	
     	Document doc = firma.getOwnerDocument();
     	
