@@ -148,9 +148,9 @@
 	<!-- nota:  esto esta para resolver el parent de los mityc* -->
 	<repositories>
 		<repository>
-			<id>sinadura-dependencies</id>
-			<name>sinadura-dependencies</name>
-			<url>https://services.zylk.net/nexus/content/repositories/sinadura-micyt</url>
+			<id>sinadura-group</id>
+			<name>sinadura-group</name>
+			<url>https://services.zylk.net/nexus/content/groups/sinadura-group</url>
 			<layout>default</layout>
 			<releases>
 				<enabled>true</enabled>
