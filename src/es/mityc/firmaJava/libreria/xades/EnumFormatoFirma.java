@@ -35,5 +35,6 @@ public enum EnumFormatoFirma {
 	XAdES_T,
 	XAdES_C,
 	XAdES_X,
-	XAdES_XL
+	XAdES_XL,
+	XAdES_A // solo se usa cuando se valida con zain
 }
