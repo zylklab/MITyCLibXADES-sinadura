@@ -24,6 +24,7 @@ import org.w3c.dom.Node;
 
 import es.mityc.firmaJava.libreria.ConstantesXADES;
 import es.mityc.firmaJava.libreria.utilidades.NombreNodo;
+import es.mityc.firmaJava.libreria.xades.XadesConfigUtil;
 import es.mityc.firmaJava.libreria.xades.errores.InvalidInfoNodeException;
 
 /**
@@ -94,11 +95,19 @@ public abstract class AbstractXMLElement {
 	 * @return
 	 */
 	protected boolean isElementName(Element element, String namespaceURI, String name) {
-		if ((element != null) &&
-			(new NombreNodo(namespaceURI, name).equals(
-			 new NombreNodo(element.getNamespaceURI(), element.getLocalName()))))
+		
+		if (XadesConfigUtil.isCheckNodeName()) {
+			// MOD::: Como en el caso de algunas firmas los namespaces no estan del todo bien declarados permitimos la
+			// desactivacion de esta verificacion.
+			if ((element != null) &&
+				(new NombreNodo(namespaceURI, name).equals(
+				 new NombreNodo(element.getNamespaceURI(), element.getLocalName()))))
+				return true;
+			return false;
+			
+		} else {
 			return true;
-		return false;
+		}
 	}
 	
 	/**
