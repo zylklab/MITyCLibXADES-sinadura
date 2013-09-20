@@ -7,13 +7,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>MITyCLibXADES-sinadura</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.7</version>
 	<name>MITyCLibXADES-sinadura</name>
 	
 	
 	<scm>
-   		<connection>scm:svn:https://services.zylk.net/sinadura-repo/sinadura/MITyCLibXADES-sinadura/trunk</connection>
-   		<url>https://services.zylk.net/sinadura-repo/sinadura/MITyCLibXADES-sinadura/trunk</url>
+   		<connection>scm:svn:https://services.zylk.net/sinadura-repo/sinadura/MITyCLibXADES-sinadura/tags/MITyCLibXADES-sinadura-1.0.7</connection>
+   		<url>https://services.zylk.net/sinadura-repo/sinadura/MITyCLibXADES-sinadura/tags/MITyCLibXADES-sinadura-1.0.7</url>
 	</scm>
 	
 	<build>
