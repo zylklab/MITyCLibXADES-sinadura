@@ -1,0 +1,17 @@
+
+-- CXSig Validation modifications
+- XAdesConfigUtil, AbstractXMLElement
+
+-- XAdES_A option
+- EnumFormatoFirma
+
+-- FIX. when fetchiing the timestamp signer
+
+-- Java 7 bug when fetching OCSP signer
+- FirmaXML, FirmaXMLAux
+
+-- Modifications for XAdES XL signatures so they include all the OCSPs 
+- FirmaXML, FirmaXMLAux, Test299, GenericXMLSignature
+
+-- Proxy. Uso de librería apache vs. java
+(esto no sé si va en este proyecto u otro)
