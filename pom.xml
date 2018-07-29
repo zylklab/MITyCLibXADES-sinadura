@@ -10,14 +10,14 @@
 	<groupId>es.mityc.jumbo.adsi</groupId>
 	<artifactId>MITyCLibXADES-sinadura</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.8</version>
+	<version>1.0.9-SNAPSHOT</version>
 	<name>MITyCLibXADES-sinadura</name>
 
 	<scm>
     	<connection>scm:git:https://github.com/zylklab/MITyCLibXADES-sinadura.git</connection>
         <developerConnection>scm:git:https://github.com/zylklab/MITyCLibXADES-sinadura.git</developerConnection>
         <url>https://github.com/zylklab/MITyCLibXADES-sinadura</url>
-        <tag>MITyCLibXADES-sinadura-1.0.8</tag>
+        <tag>develop</tag>
     </scm>
 	
 	<build>
