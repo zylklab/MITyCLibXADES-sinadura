@@ -56,7 +56,8 @@
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibTSA-sinadura</artifactId>
-			<version>1.0.8-SNAPSHOT</version>
+			<!-- <version>1.0.8-SNAPSHOT</version>--> <!--never use SNAPSHOT for dependecies--> 
+			<version>1.0.8</version><!-- never use SNAPSHOT version --> 
 		</dependency>
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
@@ -125,7 +126,8 @@
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibOCSP-sinadura</artifactId>
-			<version>1.0.8-SNAPSHOT</version>
+			<!-- <version>1.0.8-SNAPSHOT</version>--> <!--never use SNAPSHOT for dependecies--> 
+			<version>1.0.8</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
