@@ -1,16 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<!-- 
-	<parent>
-		<groupId>es.mityc.jumbo.adsi</groupId>
-		<artifactId>components</artifactId>
-		<version>1.0.4</version>
-	</parent>
-	 -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.mityc.jumbo.adsi</groupId>
 	<artifactId>MITyCLibXADES-sinadura</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.8-SNAPSHOT</version>
+	<version>1.0.9-SNAPSHOT</version>
 	<name>MITyCLibXADES-sinadura</name>
 
 	<scm>
@@ -63,8 +56,7 @@
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibTSA-sinadura</artifactId>
-			<version>1.0.5</version>
-			<scope>compile</scope>
+			<version>1.0.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
@@ -75,8 +67,7 @@
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15</artifactId>
-			<version>1.43</version>
-			<scope>compile</scope>
+			<version>1.46</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -134,8 +125,7 @@
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibOCSP-sinadura</artifactId>
-			<version>1.0.5</version>
-			<scope>compile</scope>
+			<version>1.0.8-SNAPSHOT</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
