@@ -3,7 +3,7 @@
 	<groupId>es.mityc.jumbo.adsi</groupId>
 	<artifactId>MITyCLibXADES-sinadura</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.10-SNAPSHOT</version>
+	<version>1.0.10</version>
 	<name>MITyCLibXADES-sinadura</name>
 
 	<scm>
@@ -57,7 +57,7 @@
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibTSA-sinadura</artifactId>
 			<!-- <version>1.0.8-SNAPSHOT</version>--> <!--never use SNAPSHOT for dependecies--> 
-			<version>1.0.8</version><!-- never use SNAPSHOT version --> 
+			<version>1.0.9</version><!-- never use SNAPSHOT version --> 
 		</dependency>
 		<dependency>
 			<groupId>es.mityc.jumbo.adsi</groupId>
@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 		  <artifactId>xmlsec-mityc-sinadura</artifactId>
-		  <version>1.4.3</version>
+		  <version>1.4.4</version>
 		</dependency>
 		<dependency>
 			<groupId>xalan</groupId>
@@ -128,7 +128,7 @@
 			<groupId>es.mityc.jumbo.adsi</groupId>
 			<artifactId>MITyCLibOCSP-sinadura</artifactId>
 			<!-- <version>1.0.8-SNAPSHOT</version>--> <!--never use SNAPSHOT for dependecies--> 
-			<version>1.0.8</version>
+			<version>1.0.9</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
